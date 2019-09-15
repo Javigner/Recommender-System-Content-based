@@ -1,8 +1,16 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import warnings
-warnings.filterwarnings('ignore')
 
-data = pd.read_json("activities_dataset.json")
+df = pd.read_json("activities_dataset.json")
+df_profile = pd.read_json("Selected.json")
+
+dataset = df.iloc[:, :29]
+profile = df_profile.iloc[:, :29]
+id_title = df.iloc[:, [29,30]]
+
+profile = profile.T
+X = profile.sum(axis=1)
+recommendation_table_df = (dataset.dot(X)) / X.sum()
+Score_csv = pd.concat([id_title, pd.DataFrame(recommendation_table_df)], axis=1)
+Score_csv.columns = ['id', 'title', 'score']
+Score_csv = Score_csv.sort_values(by='score', ascending=False)
