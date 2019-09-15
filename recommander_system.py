@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 df = pd.read_json("activities_dataset.json")
-df_profile = pd.read_json("Selected.json")
+df_profile = pd.read_json("profile.json")
 
 dataset = df.iloc[:, :29]
 profile = df_profile.iloc[:, :29]
